@@ -1,0 +1,168 @@
+{
+  "id": "ai_ethics",
+  "title": "AI 倫理議題",
+  "description": "人工智慧技術快速發展，帶來效率提升與創新機會，同時也引發倫理爭議與社會風險。本議題探討政府監管、科技公司開發與使用者權益三方立場，分析演算法偏見、資料治理、透明度、問責制等核心議題，協助理解 AI 倫理的多元觀點與治理挑戰。",
+  "stances": [
+    {
+      "id": "government",
+      "name": "政府／監管機關",
+      "summary": "政府認為需要建立完善的監管框架與法律規範，確保 AI 系統的公平性、透明度與問責制。透過演算法審計、資料治理規範與強制性透明度要求，保護公民權益並維護社會公平。同時必須平衡創新發展與風險管控，避免過度管制阻礙技術進步。"
+    },
+    {
+      "id": "developer",
+      "name": "科技公司與開發者",
+      "summary": "科技公司強調技術創新與商業競爭力的重要性，主張透過業界自律與最佳實踐來解決倫理問題。他們認為過度監管可能阻礙創新速度，建議採用靈活的治理模式。同時投入資源提升 AI 系統的可解釋性與資料安全，以建立使用者信任。"
+    },
+    {
+      "id": "user",
+      "name": "使用者與受影響群體",
+      "summary": "使用者與受影響群體關注 AI 系統對個人隱私、公平性與自主權的影響。他們要求更透明的演算法決策過程、明確的使用者同意機制，以及當 AI 決策造成損害時的問責與救濟管道。希望透過公民參與與監督，確保 AI 技術真正服務於公共利益。"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "algorithm-bias",
+      "label": "演算法偏見",
+      "group": "neutral",
+      "explanation": "指 AI 系統在訓練資料或設計過程中，無意間複製或放大社會既有的偏見與歧視，導致對特定群體產生不公平的決策結果。",
+      "examples": [
+        "求職 AI 系統可能因為訓練資料的歷史偏見，對女性或特定族裔求職者產生歧視。",
+        "醫療診斷 AI 如果主要使用特定族群的資料訓練，可能對其他族群診斷準確度較低。"
+      ]
+    },
+    {
+      "id": "data-governance",
+      "label": "資料治理",
+      "group": "gov",
+      "explanation": "指建立資料收集、儲存、使用與分享的規範與機制，確保資料品質、安全性與合規性，同時保護個人隱私權益。",
+      "examples": [
+        "政府要求企業在收集個人資料前必須明確告知用途並取得同意。",
+        "資料治理規範要求企業定期清理過時或無效的訓練資料。"
+      ]
+    },
+    {
+      "id": "transparency",
+      "label": "透明度",
+      "group": "gov",
+      "explanation": "要求 AI 系統的運作方式、決策邏輯與資料來源能夠被理解與檢視，讓使用者與監管機關能夠評估系統的公平性與可靠性。",
+      "examples": [
+        "監管機關要求金融機構在使用 AI 進行信貸評估時，必須說明主要考量因素。",
+        "政府要求公共服務的 AI 系統必須公開其決策流程與演算法概要。"
+      ]
+    },
+    {
+      "id": "accountability",
+      "label": "問責制",
+      "group": "gov",
+      "explanation": "當 AI 系統做出錯誤決策或造成損害時，必須有明確的責任歸屬與救濟機制，確保受影響者能夠獲得補償或修正。",
+      "examples": [
+        "自動駕駛車發生事故時，需要釐清是演算法錯誤、感測器故障還是人為操作問題。",
+        "AI 醫療診斷系統誤診導致延誤治療，患者應有管道追究責任並獲得賠償。"
+      ]
+    },
+    {
+      "id": "automated-decision",
+      "label": "自動化決策",
+      "group": "neutral",
+      "explanation": "指由 AI 系統自動做出影響個人權益的決策，如信貸審核、工作錄取、保費計算等，可能缺乏人性化考量與彈性。",
+      "examples": [
+        "銀行使用 AI 自動審核貸款申請，拒絕了信用良好但資料格式特殊的申請者。",
+        "企業用 AI 系統篩選履歷，可能錯過不符合傳統模式但具潛力的人才。"
+      ]
+    },
+    {
+      "id": "privacy",
+      "label": "隱私",
+      "group": "user",
+      "explanation": "AI 系統需要大量個人資料進行訓練與運作，可能侵犯個人隱私權，包括資料收集範圍過廣、未經同意使用或資料外洩等問題。",
+      "examples": [
+        "人臉辨識系統在公共場所大量收集民眾生物特徵，引發隱私權爭議。",
+        "智慧型手機的語音助理可能在不經意間錄音並上傳到雲端，侵犯使用者隱私。"
+      ]
+    },
+    {
+      "id": "data-security",
+      "label": "資料安全",
+      "group": "developer",
+      "explanation": "指保護 AI 系統使用的資料免於未授權存取、竄改或外洩，確保系統運作穩定與使用者資料安全。",
+      "examples": [
+        "科技公司投入大量資源建立資料加密與存取控制機制。",
+        "企業擔心資料外洩會損害品牌形象與使用者信任。"
+      ]
+    },
+    {
+      "id": "fairness",
+      "label": "公平性",
+      "group": "user",
+      "explanation": "要求 AI 系統對不同背景、性別、種族或社經地位的使用者提供公平的服務與機會，不因個人特徵而產生歧視性結果。",
+      "examples": [
+        "求職者要求 AI 履歷篩選系統不應因性別或年齡而產生偏見。",
+        "弱勢族群擔心 AI 信貸評估系統可能因為歷史資料偏見而對他們不利。"
+      ]
+    },
+    {
+      "id": "explainability",
+      "label": "可解釋性",
+      "group": "developer",
+      "explanation": "指 AI 系統能夠以人類可理解的方式說明其決策理由，幫助使用者與開發者理解系統運作邏輯，提升信任度與除錯能力。",
+      "examples": [
+        "科技公司開發可解釋的 AI 模型，讓使用者了解為什麼系統做出特定推薦。",
+        "醫療 AI 系統需要能夠向醫師解釋診斷依據，才能獲得臨床採用。"
+      ]
+    },
+    {
+      "id": "regulatory-framework",
+      "label": "監管框架",
+      "group": "gov",
+      "explanation": "政府建立的法律規範與監管機制，要求 AI 系統必須符合特定標準與要求，包括安全性、公平性與透明度等。",
+      "examples": [
+        "歐盟通過 AI 法案，要求高風險 AI 系統必須通過嚴格審查才能上市。",
+        "政府要求金融機構使用 AI 前必須向監管機關報備並接受定期檢查。"
+      ]
+    },
+    {
+      "id": "algorithm-audit",
+      "label": "演算法審計",
+      "group": "gov",
+      "explanation": "由獨立第三方或監管機關對 AI 系統進行檢視與測試，評估其公平性、準確性與合規性，類似於財務審計的概念。",
+      "examples": [
+        "監管機關要求銀行定期接受演算法審計，確保信貸系統沒有歧視性偏見。",
+        "政府委託學術機構審計公共服務 AI 系統，評估其對不同群體的影響。"
+      ]
+    },
+    {
+      "id": "user-consent",
+      "label": "使用者同意",
+      "group": "user",
+      "explanation": "要求在使用個人資料訓練或運作 AI 系統前，必須獲得使用者的明確同意，並清楚告知資料用途與可能風險。",
+      "examples": [
+        "使用者要求企業在使用個人資料訓練 AI 前，必須取得明確且可撤回的同意。",
+        "隱私權團體主張，使用者的資料不應在未經同意的情況下被用於 AI 訓練。"
+      ]
+    }
+  ],
+  "links": [
+    { "source": "algorithm-bias", "target": "fairness", "weight": 0.95 },
+    { "source": "algorithm-bias", "target": "automated-decision", "weight": 0.9 },
+    { "source": "transparency", "target": "explainability", "weight": 0.85 },
+    { "source": "transparency", "target": "algorithm-audit", "weight": 0.8 },
+    { "source": "accountability", "target": "algorithm-audit", "weight": 0.9 },
+    { "source": "accountability", "target": "automated-decision", "weight": 0.85 },
+    { "source": "data-governance", "target": "privacy", "weight": 0.9 },
+    { "source": "data-governance", "target": "data-security", "weight": 0.85 },
+    { "source": "data-governance", "target": "user-consent", "weight": 0.8 },
+    { "source": "regulatory-framework", "target": "transparency", "weight": 0.9 },
+    { "source": "regulatory-framework", "target": "accountability", "weight": 0.85 },
+    { "source": "regulatory-framework", "target": "algorithm-audit", "weight": 0.8 },
+    { "source": "privacy", "target": "user-consent", "weight": 0.9 },
+    { "source": "privacy", "target": "data-security", "weight": 0.85 },
+    { "source": "fairness", "target": "algorithm-bias", "weight": 0.95 },
+    { "source": "explainability", "target": "transparency", "weight": 0.85 },
+    { "source": "explainability", "target": "accountability", "weight": 0.75 },
+    { "source": "automated-decision", "target": "accountability", "weight": 0.9 },
+    { "source": "automated-decision", "target": "fairness", "weight": 0.85 },
+    { "source": "algorithm-audit", "target": "algorithm-bias", "weight": 0.8 },
+    { "source": "user-consent", "target": "privacy", "weight": 0.9 },
+    { "source": "data-security", "target": "privacy", "weight": 0.8 }
+  ]
+}
