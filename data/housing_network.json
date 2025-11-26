@@ -1,0 +1,90 @@
+{
+  "_comment": "網絡圖資料檔案 - 存放關鍵字節點與連結關係",
+  "_description": "此檔案包含用於視覺化網絡圖的節點（nodes）和連結（links）資料",
+  "_note": "節點的 id 必須與 housing.json 中的 nodes 對應，links 的 source 和 target 必須是有效的節點 id",
+  
+  "nodes": [
+    {
+      "_comment": "節點範例 1：核心問題節點",
+      "id": "high-price",
+      "label": "高房價",
+      "group": "neutral",
+      "_note": "group 用於分類節點，對應到不同的立場群組（gov/government, youth, developer, user, neutral）",
+      "explanation": "整個議題的核心問題，指房價相對於收入與生活成本過高，造成多數家庭難以負擔。",
+      "examples": [
+        "台北市高房價讓許多年輕人覺得一輩子都買不起房。",
+        "高房價已經影響到企業招募與人口流動。"
+      ]
+    },
+    {
+      "_comment": "節點範例 2：政府政策節點",
+      "id": "social-housing",
+      "label": "社會住宅",
+      "group": "government",
+      "explanation": "由政府或公辦民營提供、以合理租金為主的住宅，主要服務中低收入或弱勢族群，被視為改善居住正義的重要工具。",
+      "examples": [
+        "政府承諾在未來數年內大幅增加社會住宅的戶數。",
+        "不少青年認為社會住宅申請門檻仍然偏高。"
+      ]
+    },
+    {
+      "_comment": "節點範例 3：青年立場節點",
+      "id": "rent-burden",
+      "label": "租金負擔",
+      "group": "youth",
+      "explanation": "指租金在收入中所占比例過高，擠壓其他生活支出與儲蓄空間。",
+      "examples": [
+        "有上班族每月三分之一以上的收入都拿去付房租。",
+        "租金負擔過重會影響青年是否願意生養小孩。"
+      ]
+    },
+    {
+      "_comment": "節點範例 4：建商立場節點",
+      "id": "land-cost",
+      "label": "土地成本",
+      "group": "developer",
+      "explanation": "包含標購土地價格、整地與開發成本，是建商常用來說明房價難以下降的因素之一。",
+      "examples": [
+        "建商指出近年土地成本節節上升。",
+        "有學者則質疑土地成本是否被誇大。"
+      ]
+    },
+    {
+      "_comment": "節點範例 5：中立概念節點",
+      "id": "price-income-ratio",
+      "label": "房價所得比",
+      "group": "neutral",
+      "explanation": "房價與家庭年所得的比值，是衡量房價是否合理的重要指標，比值越高代表越難負擔。",
+      "examples": [
+        "台北市的房價所得比在國際上名列前茅。",
+        "房價所得比過高顯示年輕人要存頭期款需要很多年。"
+      ]
+    }
+  ],
+  
+  "links": [
+    {
+      "_comment": "連結範例：高房價 → 購屋壓力（權重 0.95，表示關聯性很強）",
+      "source": "high-price",
+      "target": "price-income-ratio",
+      "weight": 0.9,
+      "_note": "weight 範圍建議在 0.1-1.0 之間，數值越高表示兩個關鍵字在同一篇文章或論述中出現的頻率越高"
+    },
+    {
+      "_comment": "連結範例：社會住宅 → 租金負擔（政策工具與問題的關聯）",
+      "source": "social-housing",
+      "target": "rent-burden",
+      "weight": 0.75
+    },
+    {
+      "_comment": "連結範例：土地成本 → 高房價（建商立場的論述關聯）",
+      "source": "land-cost",
+      "target": "high-price",
+      "weight": 0.8
+    }
+  ],
+  
+  "_usage_note": "此檔案可獨立使用，或與 housing.json 合併。如果使用此檔案，前端需要載入此檔案來建立網絡圖。"
+}
+
+

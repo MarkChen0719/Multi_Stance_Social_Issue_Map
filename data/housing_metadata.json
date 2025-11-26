@@ -1,0 +1,39 @@
+{
+  "_comment": "議題元資料檔案 - 存放議題的基本資訊與統計資料",
+  "_description": "此檔案用於儲存議題的後設資料，包括資料來源資訊、更新時間等",
+  
+  "issueId": "housing",
+  "issueTitle": "台灣高房價與居住正義議題",
+  
+  "dataSource": {
+    "types": ["新聞報導", "評論文章", "政策文件", "NGO 報告"],
+    "platforms": ["某報", "某新聞網", "某政府公開資料平台", "某NGO組織"],
+    "timeRange": {
+      "start": "2023-01-01",
+      "end": "2025-12-31",
+      "display": "2023-2025"
+    },
+    "lastUpdated": "2025-01-24"
+  },
+  
+  "statistics": {
+    "_comment": "統計資料會從實際載入的文章和節點資料自動計算，此處為預設值",
+    "expectedArticleCount": 10,
+    "expectedSourceCount": 4,
+    "expectedNodeCount": 12,
+    "expectedLinkCount": 14
+  },
+  
+  "methodology": {
+    "_comment": "研究方法說明",
+    "textMining": {
+      "description": "使用文字探勘技術從大量文本中萃取關鍵字與概念",
+      "keywords": ["租金", "囤房", "社宅", "青年租屋", "房東", "仲介", "法規"]
+    },
+    "networkAnalysis": {
+      "description": "運用社會網絡分析建立關鍵字共現網絡，觀察不同立場與問題聚集的結構性特徵"
+    }
+  }
+}
+
+
