@@ -558,6 +558,58 @@ nav {
     text-align: center;
 }
 
+/* 研究說明區塊 */
+.research-overview-section {
+    margin-top: 30px;
+    margin-bottom: 40px;
+}
+
+.research-overview-section h2 {
+    font-size: 1.8em;
+    color: #2c3e50;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 3px solid #3498db;
+}
+
+.research-overview-content {
+    background-color: #f8f9fa;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    padding: 30px;
+    line-height: 1.8;
+}
+
+.research-overview-content h3 {
+    font-size: 1.3em;
+    color: #2c3e50;
+    margin-top: 25px;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.research-overview-content h3:first-child {
+    margin-top: 0;
+}
+
+.research-overview-content p {
+    color: #555;
+    margin-bottom: 15px;
+    font-size: 1.05em;
+}
+
+.research-overview-content ul {
+    margin: 15px 0;
+    padding-left: 25px;
+    color: #555;
+}
+
+.research-overview-content li {
+    margin-bottom: 10px;
+    line-height: 1.8;
+}
+
 /* 資料來源與研究方法區塊 */
 .data-source-section {
     margin-bottom: 40px;
@@ -591,6 +643,19 @@ nav {
 .info-item strong {
     color: #2c3e50;
     margin-right: 8px;
+}
+
+.info-item-highlight {
+    background-color: #f0f8ff;
+    padding: 10px 15px;
+    border-radius: 4px;
+    border-left: 3px solid #3498db;
+    font-weight: 500;
+}
+
+.info-item-highlight strong {
+    color: #3498db;
+    font-size: 1.05em;
 }
 
 .methodology-info {
@@ -658,9 +723,16 @@ nav {
 
 .article-meta {
     display: flex;
-    gap: 15px;
+    flex-direction: column;
+    gap: 12px;
     font-size: 0.9em;
     color: #7f8c8d;
+    margin-top: 10px;
+}
+
+.article-meta-row {
+    display: flex;
+    gap: 20px;
     flex-wrap: wrap;
     align-items: center;
 }
@@ -681,23 +753,43 @@ nav {
     color: #2c3e50;
 }
 
-.article-url {
-    margin-left: auto;
+.article-url-row {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+    padding-top: 10px;
+    border-top: 1px solid #e0e0e0;
 }
 
-.article-link {
+.article-url-label {
+    font-weight: 500;
+    color: #2c3e50;
+    white-space: nowrap;
+}
+
+.article-url-label strong {
+    color: #2c3e50;
+}
+
+.article-url-link {
     color: #3498db;
     text-decoration: none;
     font-weight: 500;
-    padding: 4px 12px;
-    border: 1px solid #3498db;
+    word-break: break-all;
+    flex: 1;
+    min-width: 200px;
+    padding: 6px 10px;
+    background-color: #f8f9fa;
+    border: 1px solid #d0d0d0;
     border-radius: 4px;
     transition: all 0.2s ease;
 }
 
-.article-link:hover {
-    background-color: #3498db;
-    color: white;
+.article-url-link:hover {
+    background-color: #e8f4f8;
+    border-color: #3498db;
+    text-decoration: underline;
 }
 
 .no-articles {
@@ -715,19 +807,19 @@ nav {
     margin-bottom: 40px;
 }
 
-.findings-section h3 {
-    font-size: 1.5em;
+.findings-section h2 {
+    font-size: 1.8em;
     color: #2c3e50;
-    margin-bottom: 20px;
-    padding-bottom: 10px;
-    border-bottom: 2px solid #e0e0e0;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 3px solid #3498db;
 }
 
 .findings-content {
     background-color: #f8f9fa;
     border: 1px solid #e0e0e0;
     border-radius: 6px;
-    padding: 25px;
+    padding: 30px;
 }
 
 .findings-list {
@@ -737,31 +829,37 @@ nav {
 }
 
 .finding-item {
-    margin-bottom: 20px;
-    padding: 15px;
+    margin-bottom: 30px;
+    padding: 25px;
     background-color: white;
-    border-left: 4px solid #3498db;
-    border-radius: 4px;
-    line-height: 1.8;
+    border-left: 5px solid #3498db;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: box-shadow 0.3s ease;
+}
+
+.finding-item:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .finding-item:last-child {
     margin-bottom: 0;
 }
 
-.finding-item strong {
+.finding-item h3 {
     color: #2c3e50;
-    display: block;
-    margin-bottom: 8px;
-    font-size: 1.05em;
+    font-size: 1.3em;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #e0e0e0;
+    font-weight: 600;
 }
 
-.findings-note {
-    margin-top: 20px;
-    padding-top: 15px;
-    border-top: 1px solid #e0e0e0;
-    color: #7f8c8d;
-    font-size: 0.9em;
+.finding-item p {
+    color: #555;
+    line-height: 1.9;
+    margin: 0;
+    font-size: 1.05em;
 }
 
 /* 問題診斷與解決方案區塊 */
@@ -770,75 +868,122 @@ nav {
     margin-bottom: 40px;
 }
 
-.solutions-section h3 {
-    font-size: 1.5em;
+.solutions-section h2 {
+    font-size: 1.8em;
     color: #2c3e50;
-    margin-bottom: 20px;
-    padding-bottom: 10px;
-    border-bottom: 2px solid #e0e0e0;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 3px solid #27ae60;
 }
 
 .solutions-content {
     display: flex;
     flex-direction: column;
-    gap: 25px;
+    gap: 30px;
 }
 
 .solution-card {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 25px;
     background-color: #f8f9fa;
     border: 1px solid #e0e0e0;
-    border-radius: 6px;
-    padding: 25px;
+    border-radius: 8px;
+    padding: 30px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: box-shadow 0.3s ease;
 }
 
-.problem-column,
-.solution-column {
+.solution-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.solution-title {
+    font-size: 1.4em;
+    color: #2c3e50;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 3px solid #3498db;
+    font-weight: 600;
+}
+
+.solution-card-content {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.problem-section,
+.solution-section,
+.platform-role-section {
     background-color: white;
     padding: 20px;
-    border-radius: 4px;
+    border-radius: 6px;
     border: 1px solid #d0d0d0;
 }
 
-.problem-column h4,
-.solution-column h4 {
-    font-size: 1.1em;
-    color: #2c3e50;
-    margin-bottom: 15px;
-    padding-bottom: 8px;
-    border-bottom: 2px solid #e74c3c;
+.problem-section {
+    border-left: 4px solid #e74c3c;
 }
 
-.solution-column h4 {
+.solution-section {
+    border-left: 4px solid #27ae60;
+}
+
+.platform-role-section {
+    border-left: 4px solid #3498db;
+    background-color: #f0f8ff;
+}
+
+.problem-section h4,
+.solution-section h4,
+.platform-role-section h4 {
+    font-size: 1.15em;
+    color: #2c3e50;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #e0e0e0;
+    font-weight: 600;
+}
+
+.problem-section h4 {
+    color: #e74c3c;
+    border-bottom-color: #e74c3c;
+}
+
+.solution-section h4 {
+    color: #27ae60;
     border-bottom-color: #27ae60;
 }
 
-.problem-column p {
-    color: #555;
-    line-height: 1.8;
+.platform-role-section h4 {
+    color: #3498db;
+    border-bottom-color: #3498db;
+}
+
+.problem-section ul,
+.solution-section ul,
+.platform-role-section ul {
     margin: 0;
-}
-
-.solution-column ul {
-    margin: 0;
-    padding-left: 20px;
+    padding-left: 25px;
     color: #555;
-    line-height: 1.8;
+    line-height: 1.9;
 }
 
-.solution-column li {
-    margin-bottom: 8px;
+.problem-section li,
+.solution-section li,
+.platform-role-section li {
+    margin-bottom: 12px;
+    font-size: 1.05em;
 }
 
-.solutions-note {
-    margin-top: 20px;
-    padding-top: 15px;
-    border-top: 1px solid #e0e0e0;
-    color: #7f8c8d;
-    font-size: 0.9em;
-    text-align: center;
+.problem-section li {
+    color: #555;
+}
+
+.solution-section li {
+    color: #2c3e50;
+}
+
+.platform-role-section li {
+    color: #2c3e50;
 }
 
 /* 頁尾 */
@@ -895,8 +1040,17 @@ footer {
     }
     
     .solution-card {
-        grid-template-columns: 1fr;
+        padding: 20px;
+    }
+    
+    .solution-card-content {
         gap: 20px;
+    }
+    
+    .problem-section,
+    .solution-section,
+    .platform-role-section {
+        padding: 15px;
     }
     
     .data-source-card {
@@ -906,6 +1060,40 @@ footer {
     .findings-content,
     .solutions-content {
         padding: 20px;
+    }
+    
+    .findings-section h2,
+    .solutions-section h2 {
+        font-size: 1.5em;
+    }
+    
+    .solution-title {
+        font-size: 1.2em;
+    }
+    
+    .finding-item h3 {
+        font-size: 1.1em;
+    }
+    
+    .article-meta-row {
+        flex-direction: column;
+        gap: 10px;
+        align-items: flex-start;
+    }
+    
+    .article-url-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+    
+    .article-url-link {
+        width: 100%;
+        min-width: auto;
+    }
+    
+    .info-item-highlight {
+        padding: 8px 12px;
     }
 }
 

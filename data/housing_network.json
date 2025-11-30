@@ -1,15 +1,33 @@
 {
-  "_comment": "網絡圖資料檔案 - 存放關鍵字節點與連結關係",
-  "_description": "此檔案包含用於視覺化網絡圖的節點（nodes）和連結（links）資料",
-  "_note": "節點的 id 必須與 housing.json 中的 nodes 對應，links 的 source 和 target 必須是有效的節點 id",
+  "_comment": "==========================================",
+  "_description": "網絡圖資料檔案 - 存放關鍵字節點與連結關係",
+  "_note": "此檔案用於視覺化網絡圖，節點的 id 必須與 housing.json 中的 nodes 對應",
+  "_usage": "前端會從 housing.json 載入 nodes 和 links，此檔案可作為獨立參考或備用",
+  "==========================================": "",
+  
+  "_field_descriptions": {
+    "nodes": "關鍵字節點陣列，每個節點代表一個關鍵概念",
+    "links": "節點之間的連結關係陣列，表示兩個關鍵字在同一篇文章或論述中共現",
+    "source": "連結的起始節點 id（必須是 nodes 中某個節點的 id）",
+    "target": "連結的目標節點 id（必須是 nodes 中某個節點的 id）",
+    "weight": "連結權重（0.1-1.0），數值越高表示兩個關鍵字共現頻率越高"
+  },
+  
+  "_group_descriptions": {
+    "gov/government": "政府／主管機關立場的關鍵字（藍色）",
+    "youth": "青年租屋族或首購族立場的關鍵字（橘色）",
+    "developer": "建商與地主立場的關鍵字（紅色）",
+    "user": "使用者或受影響群體立場的關鍵字（綠色）",
+    "neutral": "中立或跨立場關鍵詞（灰色）"
+  },
   
   "nodes": [
     {
-      "_comment": "節點範例 1：核心問題節點",
+      "_comment": "示範節點 1：核心問題節點（中立立場）",
       "id": "high-price",
       "label": "高房價",
       "group": "neutral",
-      "_note": "group 用於分類節點，對應到不同的立場群組（gov/government, youth, developer, user, neutral）",
+      "_note": "group 用於分類節點，對應到不同的立場群組，會影響網絡圖中的節點顏色",
       "explanation": "整個議題的核心問題，指房價相對於收入與生活成本過高，造成多數家庭難以負擔。",
       "examples": [
         "台北市高房價讓許多年輕人覺得一輩子都買不起房。",
@@ -17,7 +35,7 @@
       ]
     },
     {
-      "_comment": "節點範例 2：政府政策節點",
+      "_comment": "示範節點 2：政府政策節點",
       "id": "social-housing",
       "label": "社會住宅",
       "group": "government",
@@ -28,7 +46,7 @@
       ]
     },
     {
-      "_comment": "節點範例 3：青年立場節點",
+      "_comment": "示範節點 3：青年立場節點",
       "id": "rent-burden",
       "label": "租金負擔",
       "group": "youth",
@@ -39,7 +57,7 @@
       ]
     },
     {
-      "_comment": "節點範例 4：建商立場節點",
+      "_comment": "示範節點 4：建商立場節點",
       "id": "land-cost",
       "label": "土地成本",
       "group": "developer",
@@ -50,7 +68,7 @@
       ]
     },
     {
-      "_comment": "節點範例 5：中立概念節點",
+      "_comment": "示範節點 5：中立概念節點",
       "id": "price-income-ratio",
       "label": "房價所得比",
       "group": "neutral",
@@ -64,27 +82,32 @@
   
   "links": [
     {
-      "_comment": "連結範例：高房價 → 購屋壓力（權重 0.95，表示關聯性很強）",
+      "_comment": "示範連結 1：高房價 → 房價所得比（權重 0.9，表示關聯性很強）",
       "source": "high-price",
       "target": "price-income-ratio",
       "weight": 0.9,
       "_note": "weight 範圍建議在 0.1-1.0 之間，數值越高表示兩個關鍵字在同一篇文章或論述中出現的頻率越高"
     },
     {
-      "_comment": "連結範例：社會住宅 → 租金負擔（政策工具與問題的關聯）",
+      "_comment": "示範連結 2：社會住宅 → 租金負擔（政策工具與問題的關聯）",
       "source": "social-housing",
       "target": "rent-burden",
       "weight": 0.75
     },
     {
-      "_comment": "連結範例：土地成本 → 高房價（建商立場的論述關聯）",
+      "_comment": "示範連結 3：土地成本 → 高房價（建商立場的論述關聯）",
       "source": "land-cost",
       "target": "high-price",
       "weight": 0.8
+    },
+    {
+      "_comment": "示範連結 4：高房價 → 租金負擔（問題之間的關聯）",
+      "source": "high-price",
+      "target": "rent-burden",
+      "weight": 0.85
     }
   ],
   
-  "_usage_note": "此檔案可獨立使用，或與 housing.json 合併。如果使用此檔案，前端需要載入此檔案來建立網絡圖。"
+  "_usage_note": "此檔案可獨立使用，或與 housing.json 合併。目前前端主要從 housing.json 載入 nodes 和 links，此檔案作為結構參考。",
+  "_how_to_expand": "要擴充資料時，請在 nodes 陣列中新增節點物件，在 links 陣列中新增連結物件，確保 source 和 target 對應到有效的節點 id。"
 }
-
-

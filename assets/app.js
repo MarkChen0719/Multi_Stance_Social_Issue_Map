@@ -1,39 +1,89 @@
 /**
  * ============================================================================
- * 資料結構說明與配置
+ * 多立場社會議題地圖 - 前端應用程式主檔案
  * ============================================================================
  * 
- * 本專案使用以下資料檔案結構：
+ * 【資料檔案結構說明】
  * 
- * 1. data/{issueId}.json - 主要議題資料
- *    - id: 議題唯一識別碼
- *    - title: 議題標題
- *    - description: 議題描述
- *    - stances: 不同立場的陣列（至少 3 個）
- *    - nodes: 關鍵字節點陣列（建議至少 10 個）
- *    - links: 節點之間的連結關係陣列
+ * 本專案使用以下資料檔案結構（所有檔案位於 data/ 資料夾）：
  * 
- * 2. data/{issueId}_articles.json - 文章資料
- *    - articles: 文章陣列
- *      - id: 文章唯一識別碼
- *      - title: 文章標題
- *      - source: 來源媒體
- *      - date: 發布日期 (YYYY-MM-DD)
- *      - url: 文章網址（請使用假網址）
- *      - keywords: 相關關鍵字陣列（必須與 nodes 的 label 匹配）
+ * 1. data/{issueId}.json - 主要議題資料（必需）
+ *    結構：
+ *    {
+ *      "id": "議題唯一識別碼（例如：housing、ai_ethics）",
+ *      "title": "議題標題（顯示在頁面上）",
+ *      "description": "議題描述（簡短說明此議題的內容）",
+ *      "stances": [
+ *        {
+ *          "id": "立場 ID（例如：government、youth）",
+ *          "name": "立場名稱（顯示在卡片標題）",
+ *          "summary": "立場摘要說明（顯示在卡片內容）"
+ *        }
+ *      ],
+ *      "nodes": [
+ *        {
+ *          "id": "節點唯一識別碼（例如：high-price）",
+ *          "label": "關鍵字標籤（顯示在網絡圖中，必須與 articles 的 keywords 匹配）",
+ *          "group": "群組 ID（gov/government、youth、developer、user、neutral）",
+ *          "explanation": "關鍵字說明（點擊節點時顯示）",
+ *          "examples": ["例句 1", "例句 2"]
+ *        }
+ *      ],
+ *      "links": [
+ *        {
+ *          "source": "起始節點 id（必須是 nodes 中某個節點的 id）",
+ *          "target": "目標節點 id（必須是 nodes 中某個節點的 id）",
+ *          "weight": "連結權重（0.1-1.0，數值越高表示共現頻率越高）"
+ *        }
+ *      ]
+ *    }
+ * 
+ * 2. data/{issueId}_articles.json - 文章資料（必需）
+ *    結構：
+ *    {
+ *      "articles": [
+ *        {
+ *          "id": "文章唯一識別碼（建議使用 article_XXX 格式）",
+ *          "title": "文章標題（會顯示在文章列表中）",
+ *          "source": "來源媒體名稱（例如：某報、某新聞網）",
+ *          "date": "發布日期（格式：YYYY-MM-DD）",
+ *          "url": "文章原始網址（請使用假網址，例如：https://example.com/article/001）",
+ *          "keywords": ["關鍵字1", "關鍵字2"]  // 必須與 nodes 的 label 完全匹配
+ *        }
+ *      ]
+ *    }
  * 
  * 3. data/{issueId}_metadata.json - 元資料（可選）
- *    - 存放資料來源資訊、更新時間等後設資料
+ *    存放資料來源資訊、更新時間等後設資料，目前未在前端使用，可作為未來擴充用
  * 
  * 4. data/{issueId}_network.json - 網絡圖資料（可選）
- *    - 可獨立存放 nodes 和 links，或與主資料檔合併
+ *    可獨立存放 nodes 和 links，目前前端主要從 {issueId}.json 載入，此檔案作為結構參考
  * 
- * 如何新增新議題：
- * 1. 在 data/ 資料夾中建立 {issueId}.json（例如：climate.json）
- * 2. 建立對應的 {issueId}_articles.json
- * 3. 在 renderDataSourceSection() 函數的 dataSourceInfo 物件中註冊新議題
- * 4. 在 index.html 的議題列表中新增連結
- * 5. 版面會自動套用既有模板
+ * ============================================================================
+ * 【如何新增新議題】
+ * ============================================================================
+ * 
+ * 步驟 1：建立資料檔案
+ *   - 在 data/ 資料夾中建立 {issueId}.json（例如：climate.json）
+ *   - 建立對應的 {issueId}_articles.json（例如：climate_articles.json）
+ *   - 可選：建立 {issueId}_metadata.json 和 {issueId}_network.json
+ * 
+ * 步驟 2：在程式碼中註冊新議題
+ *   - 在 initIssuePage() 函數的 validIssueIds 陣列中新增議題 ID
+ *   - 在 renderDataSourceSection() 函數的 dataSourceInfo 物件中新增議題的資料來源資訊
+ * 
+ * 步驟 3：在首頁新增連結
+ *   - 在 index.html 的議題列表中新增連結（例如：<a href="issue.html?id=climate">）
+ * 
+ * 步驟 4：測試
+ *   - 開啟 index.html，點擊新議題連結
+ *   - 確認議題頁面能正常載入並顯示內容
+ * 
+ * 注意事項：
+ *   - keywords 陣列中的關鍵字必須與 nodes 的 label 完全匹配（大小寫、空格都要一致）
+ *   - 節點的 group 必須是 GROUP_CONFIG 中已定義的群組 ID
+ *   - links 的 source 和 target 必須是 nodes 中有效的節點 id
+ *   - URL 請使用假網址（例如：https://example.com/...），避免使用真實新聞連結
  * 
  * ============================================================================
  */
@@ -107,14 +157,34 @@ function getQueryParam(name) {
  * 
  * 載入的檔案：data/{issueId}.json
  * 
- * 預期資料結構：
+ * 預期資料結構說明：
  * {
- *   id: string,
- *   title: string,
- *   description: string,
- *   stances: Array<{id, name, summary}>,
- *   nodes: Array<{id, label, group, explanation, examples}>,
- *   links: Array<{source, target, weight}>
+ *   id: string,                    // 議題唯一識別碼，必須與檔案名稱一致
+ *   title: string,                  // 議題標題，顯示在頁面頂部
+ *   description: string,           // 議題描述，顯示在標題下方
+ *   stances: [                      // 不同立場的陣列（至少 3 個）
+ *     {
+ *       id: string,                 // 立場 ID（例如：government、youth）
+ *       name: string,                // 立場名稱（顯示在卡片標題）
+ *       summary: string             // 立場摘要（顯示在卡片內容）
+ *     }
+ *   ],
+ *   nodes: [                        // 關鍵字節點陣列（建議至少 10 個）
+ *     {
+ *       id: string,                 // 節點唯一識別碼（例如：high-price）
+ *       label: string,               // 關鍵字標籤（顯示在網絡圖中，必須與 articles 的 keywords 匹配）
+ *       group: string,               // 群組 ID（gov/government、youth、developer、user、neutral）
+ *       explanation: string,         // 關鍵字說明（點擊節點時顯示）
+ *       examples: [string]           // 例句陣列（點擊節點時顯示）
+ *     }
+ *   ],
+ *   links: [                        // 節點之間的連結關係陣列
+ *     {
+ *       source: string,              // 起始節點 id（必須是 nodes 中某個節點的 id）
+ *       target: string,              // 目標節點 id（必須是 nodes 中某個節點的 id）
+ *       weight: number               // 連結權重（0.1-1.0，數值越高表示共現頻率越高）
+ *     }
+ *   ]
  * }
  */
 async function loadIssueData(issueId) {
@@ -138,21 +208,24 @@ async function loadIssueData(issueId) {
  * 
  * 載入的檔案：data/{issueId}_articles.json
  * 
- * 預期資料結構：
+ * 預期資料結構說明：
  * {
- *   articles: [
+ *   articles: [                     // 文章陣列
  *     {
- *       id: string,
- *       title: string,
- *       source: string,
- *       date: string (YYYY-MM-DD),
- *       url: string,
- *       keywords: Array<string> (必須與 nodes 的 label 匹配)
+ *       id: string,                  // 文章唯一識別碼（建議使用 article_XXX 格式）
+ *       title: string,               // 文章標題（顯示在文章列表中，可點擊）
+ *       source: string,              // 來源媒體名稱（例如：某報、某新聞網）
+ *       date: string,                // 發布日期（格式：YYYY-MM-DD）
+ *       url: string,                 // 文章原始網址（請使用假網址，例如：https://example.com/article/001）
+ *       keywords: [string]           // 相關關鍵字陣列（必須與 nodes 的 label 完全匹配，大小寫、空格都要一致）
  *     }
  *   ]
  * }
  * 
- * 注意：如果檔案不存在，會返回空陣列而不會報錯
+ * 重要注意事項：
+ * - keywords 陣列中的關鍵字必須與 {issueId}.json 中 nodes 的 label 完全匹配
+ * - 當使用者點擊網絡圖中的節點時，系統會自動篩選出包含該節點關鍵字的所有文章
+ * - 如果檔案不存在，會返回空陣列而不會報錯（方便開發階段）
  */
 async function loadArticlesData(issueId) {
     try {
@@ -314,11 +387,14 @@ function renderRelatedArticles(articles, container) {
                 <a href="${article.url}" target="_blank" rel="noopener noreferrer">${article.title}</a>
             </h4>
             <div class="article-meta">
-                <span class="article-source"><strong>來源：</strong>${article.source}</span>
-                <span class="article-date"><strong>日期：</strong>${article.date}</span>
-                <span class="article-url">
-                    <a href="${article.url}" target="_blank" rel="noopener noreferrer" class="article-link">查看原文</a>
-                </span>
+                <div class="article-meta-row">
+                    <span class="article-source"><strong>來源：</strong>${article.source || '未標註'}</span>
+                    <span class="article-date"><strong>日期：</strong>${article.date || '未標註'}</span>
+                </div>
+                <div class="article-url-row">
+                    <span class="article-url-label"><strong>原文網址：</strong></span>
+                    <a href="${article.url}" target="_blank" rel="noopener noreferrer" class="article-url-link" title="${article.url}">${article.url}</a>
+                </div>
             </div>
         </div>
     `).join('');
@@ -886,32 +962,41 @@ function calculateArticleStats(articles) {
 
 /**
  * 渲染資料來源與研究方法區塊
- * @param {string} issueId - 議題 ID
+ * @param {string} issueId - 議題 ID（例如：'housing'、'ai_ethics'）
  * @param {Array} articles - 文章陣列（用於計算統計資料）
  * @returns {string} HTML 字串
  * 
- * 此函數會：
+ * 此函數的功能：
  * 1. 根據 issueId 從 dataSourceInfo 取得預設資料來源資訊
  * 2. 從實際文章資料計算統計資訊（文章數量、來源數量）
  * 3. 渲染包含資料來源、研究方法說明的區塊
  * 
- * 新增議題時，請在此處的 dataSourceInfo 物件中註冊新議題的資料來源資訊
+ * 【新增議題時的重要步驟】
+ * 請在此函數的 dataSourceInfo 物件中註冊新議題的資料來源資訊
  */
 function renderDataSourceSection(issueId, articles = []) {
     /**
-     * 議題資料來源資訊配置
+     * 議題資料來源資訊配置物件
      * 
-     * 新增議題步驟：
-     * 1. 在此物件中新增一個屬性，key 為議題 ID
-     * 2. 填入對應的 sourceTypes、platforms、timeRange、lastUpdated
+     * 此物件儲存每個議題的資料來源資訊，用於在「資料來源與研究方法」區塊中顯示
+     * 
+     * 新增議題的步驟：
+     * 1. 在此物件中新增一個屬性，key 為議題 ID（例如：'climate'）
+     * 2. 填入對應的資料來源資訊：
+     *    - sourceTypes: 資料來源類型陣列（例如：['新聞報導', '研究報告']）
+     *    - platforms: 來源平台陣列（例如：['某報', '某研究機構']）
+     *    - timeRange: 資料時間範圍（例如：'2023-2025'）
+     *    - lastUpdated: 資料最後更新時間（格式：'YYYY-MM-DD'）
      * 
      * 範例：
      * 'climate': {
-     *   sourceTypes: ['新聞報導', '研究報告'],
-     *   platforms: ['某報', '某研究機構'],
+     *   sourceTypes: ['新聞報導', '研究報告', '政策文件'],
+     *   platforms: ['某報', '某研究機構', '某政府公開資料平台'],
      *   timeRange: '2023-2025',
      *   lastUpdated: '2025-01-24'
      * }
+     * 
+     * 注意：文章數量和來源數量會從實際載入的 articles 資料自動計算
      */
     const dataSourceInfo = {
         'housing': {
@@ -940,6 +1025,14 @@ function renderDataSourceSection(issueId, articles = []) {
             <h3>資料來源與研究方法</h3>
             <div class="data-source-card">
                 <div class="data-source-info">
+                    <div class="info-item info-item-highlight">
+                        <strong>資料筆數：</strong>
+                        <span>共 ${articleCount} 篇文章</span>
+                    </div>
+                    <div class="info-item info-item-highlight">
+                        <strong>來源數量：</strong>
+                        <span>共 ${sourceCount} 個不同來源</span>
+                    </div>
                     <div class="info-item">
                         <strong>資料來源類型：</strong>
                         <span>${info.sourceTypes.join('、')}</span>
@@ -947,14 +1040,6 @@ function renderDataSourceSection(issueId, articles = []) {
                     <div class="info-item">
                         <strong>來源平台：</strong>
                         <span>${info.platforms.join('、')}</span>
-                    </div>
-                    <div class="info-item">
-                        <strong>收錄文章數量：</strong>
-                        <span>共 ${articleCount} 篇文章</span>
-                    </div>
-                    <div class="info-item">
-                        <strong>來源數量：</strong>
-                        <span>共 ${sourceCount} 個不同來源</span>
                     </div>
                     <div class="info-item">
                         <strong>資料時間範圍：</strong>
@@ -976,33 +1061,50 @@ function renderDataSourceSection(issueId, articles = []) {
     `;
 }
 
+// 渲染研究說明區塊（僅用於 housing 議題）
+function renderResearchOverviewSection(issueId) {
+    // 只為 housing 議題顯示研究說明
+    if (issueId !== 'housing') {
+        return '';
+    }
+    
+    // TODO: 請在此處插入「研究動機＋目的＋成果＋結論」的完整文本內容
+    // 請使用清楚的 HTML 標籤（<h2>, <h3>, <p>, <ul>, <li>）進行排版
+    return `
+        <section id="research-overview" class="research-overview-section">
+            <h2>研究說明</h2>
+            <div class="research-overview-content">
+                <!-- 請在此處插入研究動機、目的、成果、結論的完整文本內容 -->
+                <p>研究說明內容將在此處顯示...</p>
+            </div>
+        </section>
+    `;
+}
+
 // 渲染主要發現區塊
 function renderFindingsSection() {
     return `
         <section class="findings-section">
-            <h3>主要發現（資料觀察）</h3>
+            <h2>主要發現：居住正義議題的四個關鍵面向</h2>
             <div class="findings-content">
                 <ul class="findings-list">
                     <li class="finding-item">
-                        <strong>租金上漲相關關鍵字與青年、北部都會區高度連結：</strong>
-                        分析顯示「租金上漲」、「租金負擔」等關鍵字與「青年租屋族」、「購屋壓力」、「北部都會區」等概念在網絡中形成緊密群組，反映青年世代在都會區面臨的居住困境。
+                        <h3>租金負擔持續上升，青年與低薪族群壓力最大</h3>
+                        <p>觀察居住議題相關文本，可以看到「租金」「青年」「北部」「低薪」等關鍵字經常一起出現，顯示在都會區工作的年輕人與服務業、臨時工等族群，租金支出占所得比例偏高，超過一般建議的 30% 水準，形成長期的生活壓力與向上流動困難。</p>
                     </li>
                     <li class="finding-item">
-                        <strong>黑心房東與押金糾紛常與「資訊不對稱」、「法律知識不足」共同出現：</strong>
-                        網絡分析發現「黑心房東」、「押金糾紛」等問題節點與「資訊不對稱」、「法律知識不足」等概念高度相關，顯示租屋市場的資訊透明度與法律保障是關鍵議題。
+                        <h3>租屋資訊不透明，導致糾紛與不信任</h3>
+                        <p>與「黑心房東」「押金糾紛」「違建」「套房」相關的關鍵字，常與「合約」「仲介」「修繕」等一起出現，顯示許多糾紛來自資訊不對稱：租屋前不清楚房屋缺失與權利義務，租屋後發現問題卻缺乏清楚、快速的處理管道。</p>
                     </li>
                     <li class="finding-item">
-                        <strong>社宅相關討論集中在特定年份的政策事件：</strong>
-                        時間序列分析顯示社會住宅相關討論在特定政策發布或修法期間出現明顯高峰，反映政策推動與公眾關注的關聯性。
+                        <h3>弱勢與青年族群較難取得穩定、安全的居住選項</h3>
+                        <p>許多文本將「弱勢」「單親」「學生」「移工」「新住民」與「租不到」「被拒租」「不友善條件」連結在一起，反映出特定身份的承租人更容易在市場上被排拒，同時與「社會住宅不足」「候補時間長」的討論串聯，顯示公共部門供給尚未完全填補市場缺口。</p>
                     </li>
                     <li class="finding-item">
-                        <strong>建商與青年立場在「市場供需」與「政策干預」概念上呈現對立：</strong>
-                        網絡圖顯示建商立場多與「市場供需」、「土地成本」連結，而青年立場則與「打炒房」、「囤房稅」、「社會住宅」等政策工具連結，反映不同利害關係人的政策偏好差異。
+                        <h3>法律與政策資訊分散，實際上難以使用</h3>
+                        <p>雖然討論中不乏「租賃專法」「租金補貼」「社宅政策」等關鍵字，但常與「看不懂」「不知道怎麼申請」「不知道找誰」一起出現，顯示一般租屋族對法規與政府資源的認知有限，資訊雖存在，卻未被有效轉化為可以實際使用的工具。</p>
                     </li>
                 </ul>
-                <p class="findings-note">
-                    <em>註：以上為初步分析結果，實際內容將依完整資料分析後調整。</em>
-                </p>
             </div>
         </section>
     `;
@@ -1012,54 +1114,121 @@ function renderFindingsSection() {
 function renderSolutionsSection() {
     return `
         <section class="solutions-section">
-            <h3>問題診斷與解決方案建議</h3>
+            <h2>問題診斷與解決方案</h2>
             <div class="solutions-content">
                 <div class="solution-card">
-                    <div class="problem-column">
-                        <h4>問題描述</h4>
-                        <p>租屋資訊不透明導致租客難以比較選擇，容易落入資訊不對稱的陷阱，增加遇到黑心房東的風險。</p>
-                    </div>
-                    <div class="solution-column">
-                        <h4>對應解決方案方向</h4>
-                        <ul>
-                            <li>建立公開租金資訊平台，要求房東登錄租金與房屋條件</li>
-                            <li>推動標準化租約範本，減少合約陷阱</li>
-                            <li>建立簡易申訴管道，提供租客法律諮詢服務</li>
-                        </ul>
+                    <h3 class="solution-title">問題一：租金負擔過高，青年與低薪族難以安居</h3>
+                    <div class="solution-card-content">
+                        <div class="problem-section">
+                            <h4>問題診斷：</h4>
+                            <ul>
+                                <li>都會區租金與所得成長脫節，青年與服務業、臨時工族群租金負擔比特別高。</li>
+                                <li>輿論中充滿「被租金追著跑」「薪水都拿去繳房租」等敘事，反映結構性壓力。</li>
+                            </ul>
+                        </div>
+                        <div class="solution-section">
+                            <h4>解決方向：</h4>
+                            <ul>
+                                <li>建立常態更新的「租金資訊公開與監測機制」，讓民眾可以查詢各區域實際租金行情。</li>
+                                <li>擴大並穩定化租金補貼與青年租屋支持政策，使補貼制度更可預期、申請流程更簡化。</li>
+                                <li>鼓勵中長期租賃與穩定租期契約，降低租客頻繁搬遷與不確定感。</li>
+                            </ul>
+                        </div>
+                        <div class="platform-role-section">
+                            <h4>本平台可以扮演的角色：</h4>
+                            <ul>
+                                <li>透過文字探勘與視覺化，整理輿論與政策文件中對「高租金」的具體情境與受影響族群。</li>
+                                <li>以議題地圖方式呈現「高租金」與「收入」「地區」「補貼政策」等概念的連結，協助使用者理解問題的結構，而不只是一句「房價太高」。</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
+                
                 <div class="solution-card">
-                    <div class="problem-column">
-                        <h4>問題描述</h4>
-                        <p>弱勢族群與青年世代更難取得穩定居所，高房價與低薪資形成雙重壓力，社會住宅供給不足且申請門檻過高。</p>
-                    </div>
-                    <div class="solution-column">
-                        <h4>對應解決方案方向</h4>
-                        <ul>
-                            <li>大幅擴增社會住宅供給，降低申請門檻</li>
-                            <li>擴大租金補貼適用範圍，提高補貼金額</li>
-                            <li>推動租屋市場資訊透明化，減少弱勢族群被剝削風險</li>
-                        </ul>
+                    <h3 class="solution-title">問題二：租屋資訊不透明，黑心條款與糾紛頻傳</h3>
+                    <div class="solution-card-content">
+                        <div class="problem-section">
+                            <h4>問題診斷：</h4>
+                            <ul>
+                                <li>常見關鍵字包含「不簽約」「口頭約定」「押金不退」「臨時漲租」「違建」等，反映租約內容不清楚與房屋狀況不透明。</li>
+                                <li>許多案例顯示，租客在簽約前難以取得充分資訊，簽約後才發現屋況、權利義務與預期不符。</li>
+                            </ul>
+                        </div>
+                        <div class="solution-section">
+                            <h4>解決方向：</h4>
+                            <ul>
+                                <li>推動標準化租賃契約範本，要求重要條款（押金、修繕、漲租、終止條件）清楚寫明。</li>
+                                <li>建立簡單易懂的「租約檢查清單」，讓租客在簽約前就能自我檢查風險。</li>
+                                <li>強化對違規廣告、違建出租、押金濫收等行為的檢舉與處罰機制。</li>
+                            </ul>
+                        </div>
+                        <div class="platform-role-section">
+                            <h4>本平台可以扮演的角色：</h4>
+                            <ul>
+                                <li>蒐集與分析「租屋糾紛」相關文本，歸納出最常出現的風險關鍵字與情境。</li>
+                                <li>提供「租約風險關鍵字提醒」與簡化說明，作為租客在看房與簽約前的參考工具。</li>
+                                <li>未來可延伸為互動小工具：讓使用者貼上一段租屋文案，系統標出可能需要注意的字句。</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
+                
                 <div class="solution-card">
-                    <div class="problem-column">
-                        <h4>問題描述</h4>
-                        <p>投資客與囤房行為推升房價，市場供需機制失靈，政策打炒房工具效果有限。</p>
-                    </div>
-                    <div class="solution-column">
-                        <h4>對應解決方案方向</h4>
-                        <ul>
-                            <li>提高囤房稅率，增加持有成本</li>
-                            <li>加強實價登錄透明度，縮短揭露時間落差</li>
-                            <li>限制短期轉售，抑制投機炒作</li>
-                            <li>釋出更多公有土地，增加供給量</li>
-                        </ul>
+                    <h3 class="solution-title">問題三：弱勢與特定身份族群被拒於租屋市場之外</h3>
+                    <div class="solution-card-content">
+                        <div class="problem-section">
+                            <h4>問題診斷：</h4>
+                            <ul>
+                                <li>文本中可看到「不租學生」「不租外國人」「不租小孩」「不租寵物」等排除條件，顯示租屋市場存在明顯的歧視與排除。</li>
+                                <li>與「社會住宅不足」「候補多年」「抽不到」等關鍵字相連，表示公共部門提供的替代選項尚無法完全承接被排拒者的需求。</li>
+                            </ul>
+                        </div>
+                        <div class="solution-section">
+                            <h4>解決方向：</h4>
+                            <ul>
+                                <li>擴大社會住宅與包租代管等公共與準公共方案，優先保障弱勢與被市場排拒族群。</li>
+                                <li>設計對房東與包租業者的誘因機制（稅負、補助、風險分攤），降低承租弱勢戶的顧慮。</li>
+                                <li>建立匿名通報與協助機制，讓遭遇歧視或不當拒租者有明確求助管道。</li>
+                            </ul>
+                        </div>
+                        <div class="platform-role-section">
+                            <h4>本平台可以扮演的角色：</h4>
+                            <ul>
+                                <li>透過社會網絡分析，呈現「拒租條件」在不同類型討論中的出現模式，讓使用者看到歧視不是個別事件，而是有結構性的。</li>
+                                <li>彙整各種公共政策與 NGO 行動方案，讓一般使用者可以快速了解目前「替代方案」有哪些，以及缺口在哪裡。</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
-                <p class="solutions-note">
-                    <em>註：以上為初步分析與建議方向，實際政策設計需考量更多面向與可行性評估。</em>
-                </p>
+                
+                <div class="solution-card">
+                    <h3 class="solution-title">問題四：租客對法律與政策資源不熟悉，權利難以落實</h3>
+                    <div class="solution-card-content">
+                        <div class="problem-section">
+                            <h4>問題診斷：</h4>
+                            <ul>
+                                <li>討論中常見「不知道有租賃專法」「不清楚怎麼申訴」「搞不懂補貼規則」等說法。</li>
+                                <li>法規與政策資訊存在，但內容專業、分散在不同網站與文件中，一般民眾難以消化。</li>
+                            </ul>
+                        </div>
+                        <div class="solution-section">
+                            <h4>解決方向：</h4>
+                            <ul>
+                                <li>將租賃相關重要權益（押金退還、修繕責任、不得任意驅離等）整理成淺白的懶人包。</li>
+                                <li>將補貼與社宅資訊重新整理成「我適用哪一種？」的情境式指引。</li>
+                                <li>透過教育、工作坊與線上資源，使租屋族知道「遇到問題可以怎麼做」。</li>
+                            </ul>
+                        </div>
+                        <div class="platform-role-section">
+                            <h4>本平台可以扮演的角色：</h4>
+                            <ul>
+                                <li>利用文字探勘歸納出民眾最常問的問題，作為 Q&A 與教學內容的基礎。</li>
+                                <li>在議題地圖中，把法律名詞與「實際案例」連在一起，讓使用者不是只看到條文，而是看到條文在真實生活中的作用。</li>
+                                <li>作為其他官方資訊的入口網站，引導使用者連到各政府單位的正式說明與申請管道。</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
     `;
@@ -1079,6 +1248,8 @@ function renderIssuePage(data, issueId, articles = []) {
             <h2 class="issue-title">${data.title || '未命名議題'}</h2>
             <div class="issue-description">${data.description || '無描述'}</div>
         </div>
+        
+        ${renderResearchOverviewSection(issueId)}
         
         ${renderDataSourceSection(issueId, articles)}
         
