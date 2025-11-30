@@ -986,6 +986,38 @@ nav {
     color: #2c3e50;
 }
 
+/* 本平台如何協助改善問題區塊 */
+.platform-role {
+    background-color: #fff9e6;
+    padding: 20px;
+    border-radius: 6px;
+    border: 1px solid #ffd700;
+    border-left: 4px solid #ffd700;
+    margin-top: 20px;
+}
+
+.platform-role h4 {
+    font-size: 1.15em;
+    color: #2c3e50;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #ffd700;
+    font-weight: 600;
+}
+
+.platform-role ul {
+    margin: 0;
+    padding-left: 25px;
+    color: #555;
+    line-height: 1.9;
+}
+
+.platform-role li {
+    margin-bottom: 12px;
+    font-size: 1.05em;
+    color: #2c3e50;
+}
+
 /* 頁尾 */
 footer {
     margin-top: 40px;
@@ -1094,6 +1126,15 @@ footer {
     
     .info-item-highlight {
         padding: 8px 12px;
+    }
+    
+    .platform-role {
+        padding: 15px;
+        margin-top: 15px;
+    }
+    
+    .platform-role h4 {
+        font-size: 1.1em;
     }
 }
 
