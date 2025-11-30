@@ -10,7 +10,7 @@
  * 1. data/{issueId}.json - 主要議題資料（必需）
  *    結構：
  *    {
- *      "id": "議題唯一識別碼（例如：housing、ai_ethics）",
+ *      "id": "議題唯一識別碼（目前僅支援 housing，未來可擴充其他議題）",
  *      "title": "議題標題（顯示在頁面上）",
  *      "description": "議題描述（簡短說明此議題的內容）",
  *      "stances": [
@@ -152,7 +152,7 @@ function getQueryParam(name) {
 
 /**
  * 載入議題主要資料
- * @param {string} issueId - 議題 ID（例如：'housing'、'ai_ethics'）
+ * @param {string} issueId - 議題 ID（目前僅支援 'housing'，未來可擴充其他議題）
  * @returns {Promise<Object>} 議題資料物件
  * 
  * 載入的檔案：data/{issueId}.json
@@ -962,7 +962,7 @@ function calculateArticleStats(articles) {
 
 /**
  * 渲染資料來源與研究方法區塊
- * @param {string} issueId - 議題 ID（例如：'housing'、'ai_ethics'）
+ * @param {string} issueId - 議題 ID（目前僅支援 'housing'，未來可擴充其他議題）
  * @param {Array} articles - 文章陣列（用於計算統計資料）
  * @returns {string} HTML 字串
  * 
@@ -998,16 +998,12 @@ function renderDataSourceSection(issueId, articles = []) {
      * 
      * 注意：文章數量和來源數量會從實際載入的 articles 資料自動計算
      */
+    // 目前專案僅實作 housing（居住正義）一個議題
+    // 後續若要擴充其他議題，可在此處新增新的議題設定
     const dataSourceInfo = {
         'housing': {
             sourceTypes: ['新聞報導', '評論文章', '政策文件', 'NGO 報告'],
             platforms: ['某報', '某新聞網', '某政府公開資料平台', '某NGO組織'],
-            timeRange: '2023-2025',
-            lastUpdated: '2025-01-24'
-        },
-        'ai_ethics': {
-            sourceTypes: ['新聞報導', '評論文章', '政策文件'],
-            platforms: ['某報', '某新聞網', '某政府公開資料平台'],
             timeRange: '2023-2025',
             lastUpdated: '2025-01-24'
         }
@@ -1072,20 +1068,33 @@ function renderResearchOverviewSection(issueId) {
         <section id="research-overview" class="research-overview-section">
             <h2>研究說明</h2>
             <div class="research-overview-content">
+                <h3>研究範圍</h3>
                 <p>
-                    本研究旨在解決台灣居住正義議題中「資訊破碎、立場分散、缺乏問題結構」的核心困境。
+                    本專案目前只涵蓋居住正義議題。所有分析、圖表、問題診斷與解決方向，全部圍繞在居住議題，包括高租金負擔、租屋資訊不透明、弱勢排除、法規難以使用等核心問題。
                 </p>
+                
+                <h3>研究動機</h3>
                 <p>
-                    目前社會對居住問題（如租金上升、黑心房東、社宅不足、弱勢排除等）的討論多來自新聞、論壇與個案經驗，資訊雜亂且缺乏整體架構，導致政策辯論難以聚焦，民眾也難以理解問題的全貌。
+                    本研究旨在解決台灣居住正義議題中「資訊破碎、立場分散、缺乏問題結構」的核心困境。目前社會對居住問題（如租金上升、黑心房東、社宅不足、弱勢排除等）的討論多來自新聞、論壇與個案經驗，資訊雜亂且缺乏整體架構，導致政策辯論難以聚焦，民眾也難以理解問題的全貌。
                 </p>
+                
+                <h3>研究方法</h3>
                 <p>
                     本研究透過文字探勘（Text Mining）與社會網絡分析（Social Network Analysis）方法，從大量文本資料中萃取與居住議題相關的關鍵字、情境與問題群集，並建構「多立場社會議題地圖」。此地圖能呈現不同利害關係人（如政府、青年租屋族、建商）對同一議題的觀點差異，揭露隱藏於文本背後的結構性問題。
                 </p>
+                
+                <h3>研究目的</h3>
                 <p>
                     研究目的不只是整理資料，而是將居住議題中的核心問題轉化為可理解的結構：包含高租金負擔、租屋資訊不透明、弱勢排除與政策落差等面向。透過視覺化與可回溯資料的方式，本平台協助使用者快速理解問題來源、比較不同立場的觀點，並對應可能的政策方向或行動策略。
                 </p>
+                
+                <h3>研究成果</h3>
                 <p>
                     本研究最終希望提供一個以證據為基礎、具透明度且可實際應用的決策輔助工具，使學生、民眾與政策討論者能更有效地理解居住正義議題，並推動更具建設性的公共討論。
+                </p>
+                
+                <p style="margin-top: 20px; padding-top: 15px; border-top: 1px solid #e0e0e0; font-style: italic; color: #7f8c8d;">
+                    <em>註：本平台架構未來可擴充至其他社會議題（例如 AI 倫理），但本次專案僅實作居住正義之分析。</em>
                 </p>
             </div>
         </section>
@@ -1449,19 +1458,22 @@ async function initIssuePage() {
     /**
      * 有效的議題 ID 列表
      * 
+     * 目前專案僅實作 housing（居住正義）一個議題
+     * 後續若要擴充其他議題，可在此處新增新的議題 ID
+     * 
      * 新增議題步驟：
      * 1. 在此陣列中新增議題 ID（例如：'climate'）
      * 2. 確保對應的資料檔案存在（data/climate.json, data/climate_articles.json）
      * 3. 在 renderDataSourceSection() 的 dataSourceInfo 中註冊
      * 4. 在 index.html 的議題列表中新增連結
      */
-    const validIssueIds = ['housing', 'ai_ethics'];
-    if (!validIssueIds.includes(issueId)) {
+    const validIssueIds = ['housing'];
+    if (issueId !== 'housing') {
         const content = document.getElementById('issue-content');
         content.innerHTML = `
             <div class="error">
-                <p>找不到此議題</p>
-                <p>請確認您輸入的議題 ID 是否正確。</p>
+                <p>目前僅提供居住正義議題分析</p>
+                <p>此頁面僅適用 id=housing。請使用正確的議題 ID 或返回首頁。</p>
                 <a href="index.html" class="back-link">← 返回首頁</a>
             </div>
         `;
